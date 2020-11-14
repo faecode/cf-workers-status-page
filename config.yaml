@@ -1,7 +1,7 @@
 settings:
   title: "Status Page"
-  url: "https://status-page.eidam.dev" # used for Slack messages
-  logo: logo-192x192.png # image in ./public/ folder
+  url: "https://status.fae.dev" # used for Slack messages
+  logo: logo-192x192.svg # image in ./public/ folder
   daysInHistogram: 90 # number of days you want to display in histogram
 
   allmonitorsOperational: "All Systems Operational"
@@ -14,24 +14,17 @@ settings:
   dayInHistogramNotOperational: "Some checks failed"
 
 monitors:
-  - id: status-page-eidam-dev # unique identifier
-    name: Eidam's Status Page
-    description: 'https://status-page.eidam.dev' # default=empty
-    url: 'https://status-page.eidam.dev/' # URL to fetch
+  - id: app-fae-dev # unique identifier
+    name: app.fae.dev
+    url: 'https://app.fae.dev' # URL to fetch
     method: GET # default=GET
     expectStatus: 200 # operational status, default=200
     followRedirect: false # should fetch follow redirects, default=false
 
-  - id: cf-workers-status-page
-    name: Github.com Cloudflare Workers Status Page
-    description: Is the Github repository public?
-    url: 'https://github.com/eidam/cf-workers-status-page'
-    method: GET
-    expectStatus: 200
+  - id: www-fae-dev
+    name: www.fae.dev
+    url: 'https://www.fae.dev'
 
-  - id: eidam-dev
-    name: Eidam.dev (403)
-    description: 'Eidam.dev homepage, there is none'
-    url: 'https://eidam.dev'
-    method: GET
-    expectStatus: 403
+  - id: www-apiservant-com
+    name: APIServant landing page
+    url: 'https://www.apiservant.com/'
