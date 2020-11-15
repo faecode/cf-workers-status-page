@@ -11,7 +11,7 @@ export async function getMonitorsHistory() {
 }
 
 export async function getLastUpdate() {
-  return await getKV('lastUpdate')
+  return await getKVWithMetadata('lastUpdate')
 }
 
 export async function listKV(prefix = '', cacheTtl = false) {
@@ -99,7 +99,7 @@ export async function notifySlack(monitor, newMetadata) {
                 type: 'mrkdwn',
                 text: `${
                   newMetadata.operational ? ':white_check_mark:' : ':x:'
-                } \`${monitor.method} ${monitor.url}\` - :eyes: <${
+                } \`${monitor.method ? monitor.method : "GET"} ${monitor.url}\` - :eyes: <${
                   config.settings.url
                 }|Status Page>`,
               },
