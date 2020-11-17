@@ -5,10 +5,28 @@ import {
   getLastUpdate,
   getMonitors,
   getMonitorsHistory,
+  useKeyPress,
 } from '../src/functions/helpers'
 
 import config from '../config.yaml'
 import MonitorStatusLabel from '../src/components/monitorStatusLabel'
+import MonitorStatusHeader from '../src/components/monitorStatusHeader'
+import MonitorFilter from '../src/components/monitorFilter'
+
+import { Store } from 'laco'
+import { useStore } from 'laco-react'
+
+const MonitorStore = new Store(
+  {
+    monitors: config.monitors,
+    visible: config.monitors,
+    activeFilter: false
+  }
+)
+
+const filterByTerm = (term) => MonitorStore.set(
+  state => ({ visible: state.monitors.filter((monitor) => monitor.name.toLowerCase().includes(term)) })
+)
 
 export async function getEdgeProps() {
   // get KV data
@@ -49,6 +67,9 @@ export default function Index({
   monitorsOperational,
   kvLastUpdate,
 }) {
+  const state = useStore(MonitorStore)
+  const slash = useKeyPress('/')
+
   return (
     <div>
       <Head>
@@ -61,32 +82,24 @@ export default function Index({
         <link rel="stylesheet" href="./main.css" />
       </Head>
       <div className="ui basic segment container">
-        <h1 className="ui huge header">
-          <img
-            className="ui middle aligned tiny image"
-            src={config.settings.logo}
+        <div className="horizontal flex between">
+          <h1 className="ui huge marginless title header">
+            <img
+              className="ui middle aligned tiny image"
+              src={config.settings.logo}
+            />
+            {config.settings.title}
+          </h1>
+          <MonitorFilter
+            active={slash}
+            callback={filterByTerm}
           />
-          {config.settings.title}
-        </h1>
-        <div
-          className={`ui inverted segment ${
-            monitorsOperational ? 'green' : 'yellow'
-          }`}
-        >
-          <div className="horizontal flex between">
-            <div className="ui marginless header black-text">
-              {monitorsOperational
-                ? config.settings.allmonitorsOperational
-                : config.settings.notAllmonitorsOperational}
-            </div>
-            {kvLastUpdate.metadata && typeof window !== 'undefined' && (
-              <div className="black-text">
-                checked {Math.round((Date.now() - kvLastUpdate.value) / 1000)} sec ago (from {kvLastUpdate.metadata.loc})
-              </div>
-            )}
-          </div>
         </div>
-        {config.monitors.map((monitor, key) => {
+        <MonitorStatusHeader
+          operational={monitorsOperational}
+          lastUpdate={kvLastUpdate}
+        />
+        {state.visible.map((monitor, key) => {
           return (
             <div key={key} className="ui segment">
               <div

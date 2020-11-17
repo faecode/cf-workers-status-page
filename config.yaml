@@ -1,17 +1,17 @@
 settings:
-  title: "Status Page"
-  url: "https://status.fae.dev" # used for Slack messages
+  title: 'Status Page'
+  url: 'https://status.fae.dev' # used for Slack messages
   logo: logo-192x192.svg # image in ./public/ folder
   daysInHistogram: 90 # number of days you want to display in histogram
 
-  allmonitorsOperational: "All Systems Operational"
-  notAllmonitorsOperational: "Not All Systems Operational"
-  monitorLabelOperational: "Operational"
-  monitorLabelNotOperational: "Not Operational"
-  monitorLabelNoData: "No data"
-  dayInHistogramNoData: "No data"
-  dayInHistogramOperational: "All good"
-  dayInHistogramNotOperational: "Some checks failed"
+  allmonitorsOperational: 'All Systems Operational'
+  notAllmonitorsOperational: 'Not All Systems Operational'
+  monitorLabelOperational: 'Operational'
+  monitorLabelNotOperational: 'Not Operational'
+  monitorLabelNoData: 'No data'
+  dayInHistogramNoData: 'No data'
+  dayInHistogramOperational: 'All good'
+  dayInHistogramNotOperational: 'Some checks failed'
 
 monitors:
   - id: app-fae-dev # unique identifier
